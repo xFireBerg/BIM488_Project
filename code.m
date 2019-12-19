@@ -76,6 +76,9 @@ str = [ ...
 documentsNew = preprocess(str);
 XNew = encode(bag,documentsNew);
 labelsNew = predict(mdl,XNew)
+y_pred2 = string(y_pred);
+confusionchart(y_test,y_pred2);
+
 
 function documents = preprocess(textData)
 %match = [" da"," ki"," ve"," veya"," ile"," en"," de"];
