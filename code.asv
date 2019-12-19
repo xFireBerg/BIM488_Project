@@ -1,0 +1,57 @@
+legitimateFile = "sms_legitimate.txt";
+spamFile = "sms_spam.txt"
+legitimate = extractFileText(legitimateFile); %read file
+spam = extractFileText(spamFile); 
+legitimateData = split(legitimate,newline); %split to lines
+spamData = split(spam,newline);
+
+
+
+% X_train=legitimateData(1:301);
+% Y_train=spamData(1:294);
+% X_test=legitimateData(302:430);
+% Y_test=spamData(295:420);
+% fid = fopen('test.txt');
+% tline = fgetl(fid);
+
+
+
+procssedText = preprocess(t1)
+bag = bagOfWords(documents)
+bag = removeInfrequentWords(bag,2);
+[bag,idx] = removeEmptyDocuments(bag);
+YTrain(idx) = [];
+bag
+
+
+XTrain = bag.Counts;
+mdl = fitcecoc(XTrain,YTrain,'Learners','linear')
+
+% --------------------------------Test Classifier--------------------------------
+
+documentsTest = preprocess(textDataTest);
+XTest = encode(bag,documentsTest);
+
+
+YPred = predict(mdl,XTest);
+acc = sum(YPred == YTest)/numel(YTest)
+
+
+function documents = preprocess(textData)
+match = [" da"," ki"," ve"," veya"," ile"," en",""];
+% Tokenize the text.
+tokenized = tokenizedDocument(textData)
+% unnecessary ??????????????????????????????
+% details = addPartOfSpeechDetails(tokenized); 
+% Bunu Türkçeye göre düzenlememiz lazým
+% stopWords = removeStopWords(details); 
+% remove the words that in the match
+%stopWords = erase(stopWords,match);
+%documents = normalizeWords(documents,'Style','stem'); % Türkçe yok
+documents = erasePunctuation(stopWords); % nokta, virgül vs. (  .,!'^+?=_  )
+documents = removeShortWords(documents,2);
+documents = removeLongWords(documents,10);
+
+end
+
+
