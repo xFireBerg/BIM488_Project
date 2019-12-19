@@ -65,8 +65,26 @@ x_test = encode(bag,documentsTest);
 y_pred = predict(mdl,x_test);
 acc = sum(y_pred == y_test)/numel(y_test)
 
+% Confusion and F-scores
 
-% NEW DATA FOR TEST
+y_pred2 = string(y_pred);
+confusionchart(y_test,y_pred2);
+
+TP=111;
+TN=127;
+FP=2;
+FN=15;
+precision = TP/(TP+FP);
+recall = TP/(TP+FN);
+accuracy = (TP+TN)/(TP+FP+TN+FN);
+%fscore = 2*(precision*recall)/(precion+recall);
+
+%Does not work
+%plotroc(y_test,y_pred2);
+
+
+
+% -------------------------------- NEW DATA FOR TEST --------------------------------
 str = [ ...
     "Hacý nerdesin yahu."
     "Ankara Grand Hotel büyük indirimi kaçýrmayýn. Hepinizi açýlýþýmýza bekliyoruz büyük indirim var."
@@ -76,15 +94,11 @@ str = [ ...
 documentsNew = preprocess(str);
 XNew = encode(bag,documentsNew);
 labelsNew = predict(mdl,XNew)
-y_pred2 = string(y_pred);
-confusionchart(y_test,y_pred2);
+
 
 
 function documents = preprocess(textData)
-match = [" da"," ki"," ve"," veya"," ile"," en"," de", "sen", "ben", "siz", "biz"];
-
-% remove the words that in the match
-textData = erase(textData,match);
+words = [" da" " ki" " ve" " veya" " ile" " en" " de " " ama " " ancak " " bile " " çünkü " " dahi " " demek ki " " fakat " " gene " " halbuki " " hatta " " hele " " hem " " hemde " " ise " " madem " " oysa " " oysaki " " öyleyse " " üstelik " " veyahut " " ya da " " yalnýz " " yine " " yoksa "];
 
 % Tokenize the text.
 documents = tokenizedDocument(textData);
@@ -95,6 +109,10 @@ documents = addPartOfSpeechDetails(documents);
 % Bunu Türkçeye göre düzenlememiz lazým
 documents = removeStopWords(documents);
 
+
+% remove the words that in the match
+%documents = erase(documents,match);
+documents = removeWords(documents,words)
 
 % Lemmatizer (This is not work for Turkish, alternative solution used begining of the code, python Code that doint lemmatizer)
 %documents = normalizeWords(documents,'Style','stem');
