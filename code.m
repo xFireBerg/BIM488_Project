@@ -7,8 +7,8 @@ if status==0
     %fprintf('squared result is %d\n',str2num(commandOut));
 end
 % Read file
-legitimateFile = "sms_legitimate.txt";
-spamFile = "sms_spam.txt";
+legitimateFile = "cleaned_legit.txt";
+spamFile = "cleaned_spam.txt";
 legitimate = extractFileText(legitimateFile);
 spam = extractFileText(spamFile);
 
@@ -81,7 +81,10 @@ confusionchart(y_test,y_pred2);
 
 
 function documents = preprocess(textData)
-%match = [" da"," ki"," ve"," veya"," ile"," en"," de"];
+match = [" da"," ki"," ve"," veya"," ile"," en"," de", "sen", "ben", "siz", "biz"];
+
+% remove the words that in the match
+textData = erase(textData,match);
 
 % Tokenize the text.
 documents = tokenizedDocument(textData);
@@ -92,9 +95,6 @@ documents = addPartOfSpeechDetails(documents);
 % Bunu Türkçeye göre düzenlememiz lazým
 documents = removeStopWords(documents);
 
-
-% remove the words that in the match
-%documents = erase(documents,match);
 
 % Lemmatizer (This is not work for Turkish, alternative solution used begining of the code, python Code that doint lemmatizer)
 %documents = normalizeWords(documents,'Style','stem');
