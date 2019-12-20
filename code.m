@@ -63,24 +63,24 @@ x_test = encode(bag,documentsTest);
 
 
 y_pred = predict(mdl,x_test);
-acc = sum(y_pred == y_test)/numel(y_test)
+acc = sum(y_pred == y_test)/numel(y_test);
 
 % Confusion and F-scores
 
 y_pred2 = string(y_pred);
 confusionchart(y_test,y_pred2);
 
-TP=111;
-TN=127;
-FP=2;
-FN=15;
-precision = TP/(TP+FP);
-recall = TP/(TP+FN);
-accuracy = (TP+TN)/(TP+FP+TN+FN);
-%fscore = 2*(precision*recall)/(precion+recall);
+TP=120;
+TN=129;
+FP=0;
+FN=6;
+precision = TP/(TP+FP)
+recall = TP/(TP+FN)
+accuracy = (TP+TN)/(TP+FP+TN+FN)
+fscore = 2*(precision*recall)/(precision+recall)
 
 %Does not work
-%plotroc(y_test,y_pred2);
+% plotroc(y_test,y_pred2);
 
 
 
