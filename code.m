@@ -85,16 +85,7 @@ accuracy = (TP+TN)/(TP+FP+TN+FN);
 
 
 % -------------------------------- NEW DATA FOR TEST --------------------------------
-str = [ ...
-    "Hacý nerdesin yahu."
-    "Ankara Grand Hotel büyük indirimi kaçýrmayýn. Hepinizi açýlýþýmýza bekliyoruz büyük indirim var."
-    "La bu iþ basþýmýza bela oldu."
-    "ESKÝSEHÝR HAMAM büyük indirim, bu firsat kaçmaz."
-    ];
-documentsNew = preprocess(str);
-XNew = encode(bag,documentsNew);
-labelsNew = predict(mdl,XNew)
-
+% moved to test class
 
 
 function documents = preprocess(textData)
